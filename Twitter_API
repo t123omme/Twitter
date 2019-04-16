@@ -1,0 +1,33 @@
+import csv
+import tweepy
+from textblob import TextBlob
+
+consumer_key = ENTER KEY HERE
+consumer_secret = ENTER KEY HERE
+
+access_token = ENTER KEY HERE
+access_token_secret = ENTER KEY HERE
+
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+
+api = tweepy.API(auth)
+
+key_word = input("What word to search via Twitter? ")
+
+public_tweets = api.search(key_word)
+
+with open('twitter.csv', 'w') as csvFile:
+    for tweet in public_tweets:
+        
+        analysis = TextBlob(tweet.text)
+        writer = csv.writer(csvFile)
+        org_tweet = tweet.text
+        writer.writerow([org_tweet, analysis.sentiment.subjectivity, analysis.sentiment.polarity])
+
+#        print(tweet.text)
+#        analysis = TextBlob(tweet.text)
+#        print(analysis.sentiment)
+
+csvFile.close()
+
