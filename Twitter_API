@@ -17,7 +17,7 @@ key_word = input("What word to search via Twitter? ")
 
 public_tweets = api.search(key_word)
 
-with open('twitter.csv', 'w') as csvFile:
+with open('twitter.csv', 'a') as csvFile:
     for tweet in public_tweets:
         
         analysis = TextBlob(tweet.text)
